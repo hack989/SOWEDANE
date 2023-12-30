@@ -1,0 +1,80 @@
+﻿@model List<UserModel>
+@{
+    ViewData["Title"] = "User Dashboard";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Dashboard</title>
+    <style>
+    table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <h2>Users List</h2>
+        <div onclick="editUser()">
+          <i class="glyphicon glyphicon-user" style="font-size:40px;color:black;float:right" ></i>
+        </div>
+            <div onclick="logout()">
+<i class="fa fa-sign-out" style="font-size:40px;color:red;float:right" ></i>
+    </div>
+        <table border="1">
+       
+            <tr>
+                <th>LoginName</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <!-- Add more column headers as needed -->
+            </tr>
+       
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.LoginName</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <!-- Add more cells corresponding to each column -->
+                </tr>
+            }
+        </tbody>
+    </table>
+        
+    </div>
+
+
+
+    <script type="text/javascript">
+     function logout()
+     {
+     window.location.href="/user/logout";
+     }
+
+     function editUser()
+     {
+
+     window.location.href="/user/edit/1";
+     }
+    </script>
+</body>
+</html>

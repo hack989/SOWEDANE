@@ -1,0 +1,155 @@
+﻿@model SOWEDANE.Models.LoginModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0; /* Optional: Set a background color */
+        }
+
+        .card {
+            width: 300px; /* Adjust the width as needed */
+            padding: 1.9rem 1.2rem;
+            text-align: center;
+            background: #2a2b38;
+            border-radius: 8px;
+             margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Inputs */
+        .field {
+            margin-top: .5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5em;
+            background-color: #1f2029;
+            border-radius: 4px;
+            padding: .5em 1em;
+        }
+
+        .input-icon {
+            height: 1em;
+            width: 1em;
+            fill: #ffeba7;
+        }
+
+        .input-field {
+            background: none;
+            border: none;
+            outline: none;
+            width: 100%;
+            color: #d3d3d3;
+        }
+
+        /* Text */
+        .title {
+            margin-bottom: 1rem;
+            font-size: 1.5em;
+            font-weight: 500;
+            color: #f5f5f5;
+        }
+
+        /* Buttons */
+        .btn {
+            margin: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: .8em;
+            text-transform: uppercase;
+            padding: 0.6em 1.2em;
+            background-color: #ffeba7;
+            color: #5e6681;
+            box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
+            transition: all .3s ease-in-out;
+        }
+
+        .btn-link {
+            color: #f5f5f5;
+            display: block;
+            font-size: .75em;
+            transition: color .3s ease-out;
+        }
+
+        /* Hover & focus */
+        .field input:focus::placeholder {
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        .btn:hover {
+            background-color: #5e6681;
+            color: #ffeba7;
+            box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
+        }
+
+        .btn-link:hover {
+            color: #ffeba7;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+          <div id="messageContainer" style="color:red"></div>
+        <h4 class="title">Log In!</h4>
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { id = "loginForm" }))
+        {
+            <div class="field">
+    @Html.TextBoxFor(m => m.LoginName, new { autocomplete = "off", placeholder = "Username", @class = "input-field", name = "logemail" })
+</div>
+
+            <div class="field">
+                @Html.PasswordFor(m => m.Password, new { autocomplete = "off", placeholder = "Password", @class = "input-field", name = "logpass", type = "password" })
+            </div>
+            <button class="btn" type="submit">Login</button>
+        }
+        <a href="#" class="btn-link">Forgot your password?</a>
+        <a href="/user/create" class="btn-link">Register!</a>
+    </div>
+    
+  
+
+    <script>
+        $(document).ready(function () {
+            $("#loginForm").submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+
+                // Perform an AJAX request to your controller
+                $.ajax({
+                    url: '/Login/Login',
+                    type: 'POST',
+                    data: $("#loginForm").serialize(), // Serialize the form data
+                    success: function (response) {
+                        // Display the appropriate message
+                        showMessage(response.success, response.message);
+                        if(response.success)
+                        {
+                            window.location.href="/user/dashboard";
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
+            function showMessage(success, message) {
+                // Display the message in the messageContainer
+                $("#messageContainer").html('<div class="' + (success ? 'success' : 'error') + '">' + message + '</div>');
+            }
+        });
+    </script>
+</body>
+</html>
