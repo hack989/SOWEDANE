@@ -27,6 +27,25 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.logout-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.logout-text {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 50px;
+    transform: translateY(-50%);
+}
+
+.logout-container:hover .logout-text {
+    display: inline-block;
+    color: red; /* Optional: Set the color for the hover effect */
+}
+
     </style>
 </head>
 <body>
@@ -37,6 +56,7 @@ tr:nth-child(even) {
         </div>
             <div onclick="logout()">
 <i class="fa fa-sign-out" style="font-size:40px;color:red;float:right" ></i>
+  <span class="logout-text">Logout</span>
     </div>
         <table border="1">
        

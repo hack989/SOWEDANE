@@ -23,7 +23,7 @@ namespace SOWEDANE.Controllers
         public JsonResult Login(string LoginName,string Password) 
         {
             var user=this.applicationDbContext.Users.Where(x => x.LoginName == LoginName).FirstOrDefault();
-
+            
             string encryptedPassword=PasswordHasher.HashPassword(user.GeneratedSalt, Password);
 
             if (user == null)

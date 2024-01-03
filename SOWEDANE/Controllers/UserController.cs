@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SOWEDANE.EntityFrameworkContext;
 using SOWEDANE.Models;
 using SOWEDANE.Utils;
@@ -17,6 +18,8 @@ namespace SOWEDANE.Controllers
         {
             this.applicationDbContext = applicationDbContext;
             this.userOtpController = userOtpController; 
+
+           
         }
 
         
@@ -41,7 +44,18 @@ namespace SOWEDANE.Controllers
             //userModel.Email = "hello@gmail.com";
             //userDbContext.Users.Add(userModel);
             //userDbContext.SaveChanges();
-            return View();
+            var userModel = new UserModel();
+            userModel.CityList = GetCitites();
+            return View(userModel);
+        }
+
+        private List<SelectListItem> GetCitites() 
+        {
+            var cities=new  List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> ();
+            cities.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem() { Text = "Chennai", Value = "Chennai" });
+            cities.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem() { Text = "Hyderabad", Value = "Hyderabad" });
+            cities.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem() { Text = "Bangalore", Value = "Bangalore" });
+            return cities;
         }
 
         public ActionResult Login()
@@ -109,7 +123,8 @@ namespace SOWEDANE.Controllers
         {
             this.TempData["Mode"] = "Edit";
             var userId=this.HttpContext.Session.GetInt32("userId");
-            var user = this.applicationDbContext.Users.Where(x => x.Id == userId).FirstOrDefault(); 
+            var user = this.applicationDbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            user.CityList = GetCitites();
             return View("Create",user);
         }
 

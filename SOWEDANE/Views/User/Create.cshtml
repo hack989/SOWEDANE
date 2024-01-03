@@ -216,7 +216,21 @@ else
 
             <br />
 
-            <input id='submit' type="submit" value="Sign Up" />
+                @Html.LabelFor(model => model.City)
+             <div class="field">
+            @Html.DropDownListFor(model => model.City, Model.CityList, "City", new {placeholder="City" } )
+             </div>
+            @Html.ValidationMessageFor(model => model.Email)
+
+            <br />
+@if (isEditMode)
+{
+    <input id='submit' type="submit" value="Update" />
+}
+else
+{
+    <input id='submit' type="submit" value="Sign Up" />
+}
         }
 
         <div id='Otp_area'>
@@ -240,7 +254,8 @@ else
                     Password: $("#Password").val(),
                     Email: $("#Email").val(),
                     PhoneNumber: $("#PhoneNumber").val(),
-                    LoginName: $("#LoginName").val()
+                    LoginName: $("#LoginName").val(),
+                      City: $("#City").val()
                 };
                 console.log('test================>');
                 $.ajax({
